@@ -374,7 +374,7 @@ data$date &lt;- as.Date(data$date)</code></pre>
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
-<p>The total number of steps per day are calculated and stored in the variable ‘totalsteps’. Furthermore a histogram is made to show the distribution of the total number of steps per day. Using the variable ‘totalsteps’ the mean and median of the total number of steps per day are calculated.</p>
+<p>The total number of steps per day is calculated and stored in the variable ‘totalsteps’. Furthermore a histogram is made to show the distribution of the total number of steps per day. Using the variable ‘totalsteps’ the mean and median of the total number of steps per day are calculated.</p>
 <pre class="r"><code>totalsteps &lt;- with(data, tapply(steps, date, sum))
 hist(totalsteps, breaks=seq(0,25000,1000), 
       main = &quot;Histogram showing the total number of steps per day&quot;, 

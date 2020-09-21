@@ -16,11 +16,9 @@ data <- read.csv("activity.csv", header = TRUE)
 data$date <- as.Date(data$date)
 ```
 
-
 ## What is mean total number of steps taken per day?
 
-The total number of steps per day are calculated and stored in the variable 'totalsteps'. Furthermore a histogram is made to show the distribution of the total number of steps per day. Using the variable 'totalsteps' the mean and median of the total number of steps per day are calculated. 
-
+The total number of steps per day is calculated and stored in the variable 'totalsteps'. Furthermore a histogram is made to show the distribution of the total number of steps per day. Using the variable 'totalsteps' the mean and median of the total number of steps per day are calculated. 
 
 ```r
 totalsteps <- with(data, tapply(steps, date, sum))
@@ -30,7 +28,7 @@ hist(totalsteps, breaks=seq(0,25000,1000),
       ylab = "frequency")
 ```
 
-![](PA1_template_files/figure-html/total number of steps taken per day-1.png)<!-- -->
+![](PA1_template_files/figure-html/total_number_of_steps_taken_per_day-1.png)<!-- -->
 
 ```r
 mean(totalsteps, na.rm = TRUE)
@@ -60,7 +58,7 @@ plot(xaxis, intervalsteps, type = "l", main = "Average daily activity",
      xlab = "5-minute interval", ylab = "average number of steps")
 ```
 
-![](PA1_template_files/figure-html/average daily activity pattern-1.png)<!-- -->
+![](PA1_template_files/figure-html/average_daily_activity_pattern-1.png)<!-- -->
 
 ```r
 # 5-minute interval with maximum number of steps:
@@ -106,7 +104,7 @@ hist(totalsteps2, breaks=seq(0,25000,1000),
       ylab = "frequency")
 ```
 
-![](PA1_template_files/figure-html/imputing missing values continue-1.png)<!-- -->
+![](PA1_template_files/figure-html/imputing_missing_values_continue-1.png)<!-- -->
 
 ```r
 mean(totalsteps2, na.rm = TRUE)
@@ -143,7 +141,6 @@ data2 <- mutate(data2, day = factor(1*(weekdays(date)=="Saturday"|weekdays(date)
 
 A plot is made to show the average number of steps per 5-minute interval separately for weekdays and weekend days. 
 
-
 ```r
 data2$interval <- as.integer(data2$interval)
 intervalsteps2 <- with(data2, tapply(steps, list(day,interval), mean))
@@ -153,5 +150,5 @@ plot(xaxis, intervalsteps2[1,], type = "l", main = "Average daily activity on we
 plot(xaxis, intervalsteps2[2,], type = "l", main = "Average daily activity on weekend days", xlab = "5-minute interval", ylab = "average number of steps", ylim=c(0,250))
 ```
 
-![](PA1_template_files/figure-html/weekday weekend plot-1.png)<!-- -->
+![](PA1_template_files/figure-html/weekday_weekend_plot-1.png)<!-- -->
 

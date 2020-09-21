@@ -10,17 +10,15 @@ output:
 
 The dataset is called 'activity' and is loaded into R. Furthermore the class of the date column is changed from character to date.
 
-```{r load preprocessing}
+```{r load_preprocessing}
 data <- read.csv("activity.csv", header = TRUE)
 data$date <- as.Date(data$date)
 ```
 
-
 ## What is mean total number of steps taken per day?
 
-The total number of steps per day are calculated and stored in the variable 'totalsteps'. Furthermore a histogram is made to show the distribution of the total number of steps per day. Using the variable 'totalsteps' the mean and median of the total number of steps per day are calculated. 
-
-```{r total number of steps taken per day}
+The total number of steps per day is calculated and stored in the variable 'totalsteps'. Furthermore a histogram is made to show the distribution of the total number of steps per day. Using the variable 'totalsteps' the mean and median of the total number of steps per day are calculated. 
+```{r total_number_of_steps_taken_per_day}
 totalsteps <- with(data, tapply(steps, date, sum))
 hist(totalsteps, breaks=seq(0,25000,1000), 
       main = "Histogram showing the total number of steps per day", 
@@ -34,7 +32,7 @@ median(totalsteps, na.rm = TRUE)
 
 To make a plot of the average daily activity, the mean number of steps per 5-minute interval is calculated and stored in the variable 'intervalsteps'. A plot shows the change in average number of steps throughout the day. Also the 5-minute interval with the maximum number of steps is determined. 
 
-```{r average daily activity pattern}
+```{r average_daily_activity_pattern}
 intervalsteps <- with(data, tapply(steps, interval, mean, na.rm = TRUE))
 xaxis <- data$interval[1:288]
 plot(xaxis, intervalsteps, type = "l", main = "Average daily activity",
@@ -46,7 +44,7 @@ intervalsteps[intervalsteps == max(intervalsteps)]
 ## Imputing missing values
 
 The total number of missing values is calculated. On the position of missing values a value is added by using the mean number of steps during that 5-minute interval. The dataset in which missing values are replaced is called data2.
-```{r imputing missing values}
+```{r imputing_missing_values}
 # The total number of missing values in the steps column in the dataset:
 sum(is.na(data$steps))
 # Imputing missing values:
@@ -60,7 +58,7 @@ for(i in 1:nrow(data2)){
 ```
 
 The total number of steps per day are calculated again for the new dataset and stored in the variable 'totalsteps2'. A histogram is made and the mean and median of 'totalsteps2' are calculated. 
-```{r imputing missing values continue}
+```{r imputing_missing_values_continue}
 totalsteps2 <- with(data2, tapply(steps, date, sum))
 hist(totalsteps2, breaks=seq(0,25000,1000), 
       main = "Histogram showing the total number of steps per day", 
@@ -80,14 +78,13 @@ library(dplyr, warn.conflicts=F, quietly=T)
 Sys.setlocale("LC_TIME", "English")
 ```
 
-```{r weekday weekend}
+```{r weekday_weekend}
 data2 <- mutate(data2, day = factor(1*(weekdays(date)=="Saturday"|weekdays(date)=="Sunday"),
                             labels = c("weekday", "weekend")))
 ```
 
 A plot is made to show the average number of steps per 5-minute interval separately for weekdays and weekend days. 
-
-```{r weekday weekend plot}
+```{r weekday_weekend_plot}
 data2$interval <- as.integer(data2$interval)
 intervalsteps2 <- with(data2, tapply(steps, list(day,interval), mean))
 # plot
